@@ -1,15 +1,16 @@
-
 from Crypto.Cipher import AES
-from Crypto.Hash import HMAC, SHA256
 from Crypto.Random import get_random_bytes
-
-data = 'secret data to transmit'.encode()
+from Crypto.Util.strxor import strxor
 
 words = "asdfghjklqwertyu"
 
 #can use pycryptodome's ciper to do decryption
 
+def main():
+    data = 'secret data to transmit'.encode()
 
+    #padding not done, len 16 should be different
+    len16 = len(data) // 16
 
 def get_aes_key():
     get_random_bytes(16)
@@ -25,6 +26,14 @@ def main():
     print(cipher) #returning object location and not the legible cipher
 
 
+    aes_key = get_random_bytes(16)
+    ciphertext = b''
+
+    for i in range (len16):
+        ciphertext += strxor(aes_key, data[i : i+16])
+    
+    print(ciphertext)
+    
 
  
     
@@ -34,4 +43,7 @@ def main():
    
 if __name__ == '__main__':
     main()
+<<<<<<< HEAD
     
+=======
+>>>>>>> 88973225fe2ff0870b01d35c708b81affac5d993
