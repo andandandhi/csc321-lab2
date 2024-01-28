@@ -38,17 +38,30 @@ def conversion(word):
     conversion  = int(conversion)
     return conversion
 
+#words, iv)
+def xor():
+    words = get_random_bytes(16)
+    iv = get_random_bytes(16)
+    code = ""
+    for i in range(0,len(words),2):
+        for j in range(0,len(iv),2):
+            xor_val = i ^ j
+            code = code + str(xor_val)
+    print(code)
+    return code
+
+
 def cbc():
     KEY_SIZE = 16  
-    #plaintextBlock = "7AFD39E82B4A6FC1D70E9B3F8C12D5A6"
+    plaintextBlock = "7AFD39E82B4A6FC1D70E9B3F8C12D5A6"
     
-    #IV = "4F8D3E72A91B5C6EF20A9D4B1E73FBCD"
+    init_v = "4F8D3E72A91B5C6EF20A9D4B1E73FBCD"
     #plaintextBlock = "16_byte_in_block"
-    crypto
-    plaintextBlock = get_random_bytes(16)
-    init_v = get_random_bytes(16)
-    #hex_1 = plaintextBlock.hex()
-    #hex_2 = init_v.hex()
+    
+    #plaintextBlock = get_random_bytes(16)
+    #init_v = get_random_bytes(16)
+    hex_1 = plaintextBlock.hex()
+    hex_2 = init_v.hex()
     #print(hex_1)
     xor_val_literal = plaintextBlock ^ init_v
     #xor_val = bytes.fromhex(xor_val_literal[2:])
@@ -68,5 +81,5 @@ def cbc():
     
 
 if __name__ == '__main__':
-    cbc()
+    xor()
 
