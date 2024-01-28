@@ -9,4 +9,6 @@ install pip
 
 pip install pycryptodome
 
-python3 aes.py
+python3 main.py cp-logo.bmp
+
+eog ecb_ciphertext
