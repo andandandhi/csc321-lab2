@@ -14,15 +14,21 @@ def file_reader():
     filename = sys.argv[1]
     with open(filename, "rb") as in_file, \
          open("ecb_ciphertext", "wb") as ecb_file:
+        
+        ecb_file.write(in_file.read(46)) #i dont know how big bmp header is; this is guess
+
         buf = in_file.read(KEY_SIZE)
         while len(buf) == KEY_SIZE:
             ecb_file.write(ecb_encrypt(buf, aes_key))
-            buf = in_file.read(KEY_SIZE)        
-        ecb_file.write(ecb_encrypt(pkcs7(buf)))
+            buf = in_file.read(KEY_SIZE)
+        ecb_file.write(ecb_encrypt(pkcs7(buf), aes_key))
 
 def pkcs7(buf: bytes) -> bytes:
     pad_len =  KEY_SIZE - len(buf)
-    return pad_len.to_bytes(2, 'big') * pad_len
+    ba_buf = bytearray(buf) 
+    for _ in range (pad_len):
+        ba_buf.append(pad_len)
+    return bytes(ba_buf)
 
 def ecb_encrypt(plaintextBlock: bytes, aes_key: bytes) -> bytes:
     simpleCipher = AES.new(aes_key, AES.MODE_ECB)
@@ -33,6 +39,7 @@ def ecb_encrypt(plaintextBlock: bytes, aes_key: bytes) -> bytes:
     print("\nperforming decryption:")
     decryptedBlock = simpleCipher.decrypt(encryptedBlock)
     print(decryptedBlock)
+    return(encryptedBlock)
 
 
 if __name__ == '__main__':
