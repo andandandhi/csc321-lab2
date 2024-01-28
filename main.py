@@ -10,17 +10,20 @@ def main():
     KEY_SIZE = 16   
     plaintextBlock = "16_byte_in_block"
     aes_key = get_random_bytes(16)
-    simpleCipher = AES.new(aes_key, AES.MODE_EBC)
+    simpleCipher = AES.new(aes_key, AES.MODE_ECB)
     
-
+    
     encryptedBlock = simpleCipher.encrypt(bytes(plaintextBlock, 'utf-8')) # must cast string to bytes for encryption
     
     print("original block:", plaintextBlock)
     print("encrypted block:", encryptedBlock)
     print("\nperforming decryption:")
+    
     decryptedBlock = simpleCipher.decrypt(encryptedBlock)
+    print(decryptedBlock.decode('utf-8'))
+    #plaintexttwo = str(decryptedBlock)
 # What is decryptedBlock? String or bytes?
-    print(decryptedBlock)
+    #print(plaintexttwo)
 
     
 
