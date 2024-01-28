@@ -7,22 +7,26 @@ def get_aes_key():
     get_random_bytes(16)
 
 def main():
-    #aes_key = get_random_bytes(16)
-    #cipher = AES.new(aes_key, AES.MODE_EBC)
-    #print(cipher)
-    data = 'secret data to transmit'.encode()
+    KEY_SIZE = 16   
+    plaintextBlock = "16_byte_in_block"
+    aes_key = get_random_bytes(16)
+    simpleCipher = AES.new(aes_key, AES.MODE_EBC)
+    
+
+    encryptedBlock = simpleCipher.encrypt(bytes(plaintextBlock, 'utf-8')) # must cast string to bytes for encryption
+    
+    print("original block:", plaintextBlock)
+    print("encrypted block:", encryptedBlock)
+    print("\nperforming decryption:")
+    decryptedBlock = simpleCipher.decrypt(encryptedBlock)
+# What is decryptedBlock? String or bytes?
+    print(decryptedBlock)
+
+    
 
     #padding not done, len 16 should be different
-    len16 = len(data) // 16
-
-    aes_key = get_random_bytes(16)
-    ciphertext = b''
-
-    for i in range (len16):
-        ciphertext += strxor(aes_key, data[i : i+16])
-        
     
-    print(ciphertext)
+   
     
 
 if __name__ == '__main__':
