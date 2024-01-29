@@ -15,7 +15,7 @@ def file_reader():
     with open(filename, "rb") as in_file, \
          open("ecb_ciphertext", "wb") as ecb_file:
         
-        ecb_file.write(in_file.read(46)) #i dont know how big bmp header is; this is guess
+        ecb_file.write(in_file.read(52)) #i dont know how big bmp header is; this is guess
 
         buf = in_file.read(KEY_SIZE)
         while len(buf) == KEY_SIZE:
