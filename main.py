@@ -43,10 +43,7 @@ def conversion(word):
     conversion  = int(conversion)
     return conversion
 
-#words, iv)
 def xor(words, iv):
-   # words = get_random_bytes(16)
-   # iv = get_random_bytes(16)
     print(iv)
     code = b""
     for i in range(0,len(words)):
