@@ -4,7 +4,7 @@ import sys
 
 KEY_SIZE = 16
 
-def file_reader():
+def file_reader() -> None:
     aes_key = get_random_bytes(KEY_SIZE)
     
     n = len(sys.argv)
@@ -22,7 +22,6 @@ def file_reader():
             ecb_file.write(ecb_encrypt(buf, aes_key))
             buf = in_file.read(KEY_SIZE)
         ecb_file.write(ecb_encrypt(pkcs7(buf), aes_key))
-    #padding not done, len 16 should be different
 
 def pkcs7(buf: bytes) -> bytes:
     pad_len =  KEY_SIZE - len(buf)
@@ -89,6 +88,5 @@ def cbc():
 
 if __name__ == '__main__':
     file_reader()
-    #xor()
     cbc()
 
