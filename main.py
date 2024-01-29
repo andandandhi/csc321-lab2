@@ -44,8 +44,8 @@ def xor(words, iv):
    # iv = get_random_bytes(16)
     print(iv)
     code = b""
-    for i in range(0,len(words)):
-        byte_1 = words[i]
+    for i in range(0,len(words)): #taking each byte in each variable and xoring
+        byte_1 = words[i] 
         byte_2 = iv[i]
         xor_val = bytes([byte_1 ^ byte_2])
         code = code + xor_val
@@ -60,27 +60,26 @@ def cbc():
    
     #plaintextBlock = "16_byte_in_block"
     
-    plaintextBlock = get_random_bytes(16)
-    init_v = get_random_bytes(16)
-    key = get_random_bytes(KEY_SIZE)
-    xor_val = xor(plaintextBlock, init_v)
-    print("xor val:")
+    plaintextBlock = get_random_bytes(16) #in bytes
+    init_v = get_random_bytes(16) #in bytes
+    key = get_random_bytes(KEY_SIZE) #in bytes
+    xor_val = xor(plaintextBlock, init_v) #xor_val is in bytes
+    print("xor val:") #checking to see successful xor, you can remove these 2 lines
     print(xor_val)
     
-    simpleCipher = AES.new(key, AES.MODE_ECB)
-    #encryptedBlock = simpleCipher.encrypt(bytes(plaintextBlock, 'utf-8'))
-    print(simpleCipher)
-    encryptedBlock = simpleCipher.encrypt(xor_val)# must cast string to bytes for encryption
-    
-    print("encrypted block:", encryptedBlock)
-    #word = conversion(plaintextBlock)
+    simpleCipher = AES.new(key, AES.MODE_ECB) #creating encryption algorithm with key, applying ECB
 
-    decryptedBlock = simpleCipher.decrypt(encryptedBlock)
-    # What is decryptedBlock? String or bytes?
+    encryptedBlock = simpleCipher.encrypt(xor_val)# applying encryption to xor val
+    
+    print("encrypted block:", encryptedBlock) #checking encryption
+    
+
+    decryptedBlock = simpleCipher.decrypt(encryptedBlock) #checking decryption
+
     print(decryptedBlock)
 
    
-    #print(word)
+
 
     
 
