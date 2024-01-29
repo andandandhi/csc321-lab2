@@ -64,26 +64,25 @@ def xor(words, iv):
 def cbc():
     KEY_SIZE = 16 
     
-    plaintextBlock = get_random_bytes(16)
-    init_v = get_random_bytes(16)
-    key = get_random_bytes(KEY_SIZE)
-    xor_val = xor(plaintextBlock, init_v)
-    print("xor val:")
+    plaintextBlock = get_random_bytes(16) #in bytes
+    init_v = get_random_bytes(16) #in bytes
+    key = get_random_bytes(KEY_SIZE) #generating new key as per diagram in bytes
+    xor_val = xor(plaintextBlock, init_v) #xoring plaintext and init vector
+    print("xor val:") #checking xor, you can remove thes two lines
     print(xor_val)
     
-    simpleCipher = AES.new(key, AES.MODE_ECB)
-    print(simpleCipher)
+    simpleCipher = AES.new(key, AES.MODE_ECB) #creating encrytpion alg
+   
     
-    encryptedBlock = simpleCipher.encrypt(xor_val)# must cast string to bytes for encryption
-    print("encrypted block:", encryptedBlock)
+    encryptedBlock = simpleCipher.encrypt(xor_val)#encrypting the xored value with ECB (so this is CBC)
+    print("encrypted block:", encryptedBlock) #checking encryption
     
 
-    decryptedBlock = simpleCipher.decrypt(encryptedBlock)
+    decryptedBlock = simpleCipher.decrypt(encryptedBlock) #checking decryption
     print(decryptedBlock)
 
    
-    #word = conversion(plaintextBlock)
-    #print(word)
+ 
 
     
 
