@@ -73,15 +73,16 @@ def cbc():
     
     simpleCipher = AES.new(key, AES.MODE_ECB)
     print(simpleCipher)
-    encryptedBlock = simpleCipher.encrypt(xor_val)# must cast string to bytes for encryption
     
+    encryptedBlock = simpleCipher.encrypt(xor_val)# must cast string to bytes for encryption
     print("encrypted block:", encryptedBlock)
-    #word = conversion(plaintextBlock)
+    
 
     decryptedBlock = simpleCipher.decrypt(encryptedBlock)
     print(decryptedBlock)
 
    
+    #word = conversion(plaintextBlock)
     #print(word)
 
     
