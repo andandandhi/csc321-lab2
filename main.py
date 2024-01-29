@@ -5,7 +5,7 @@ import sys
 KEY_SIZE = 16
 
 def file_reader():
-    aes_key = get_random_bytes(16)
+    aes_key = get_random_bytes(KEY_SIZE)
     
     n = len(sys.argv)
     if(n < 1):
@@ -15,7 +15,7 @@ def file_reader():
     with open(filename, "rb") as in_file, \
          open("ecb_ciphertext", "wb") as ecb_file:
         
-        ecb_file.write(in_file.read(52)) #i dont know how big bmp header is; this is guess
+        ecb_file.write(in_file.read(54)) #i dont know how big bmp header is; this is guess
 
         buf = in_file.read(KEY_SIZE)
         while len(buf) == KEY_SIZE:
@@ -34,11 +34,6 @@ def ecb_encrypt(plaintextBlock: bytes, aes_key: bytes) -> bytes:
     simpleCipher = AES.new(aes_key, AES.MODE_ECB)
     
     encryptedBlock = simpleCipher.encrypt(plaintextBlock)
-    print("original block:", plaintextBlock)
-    print("encrypted block:", encryptedBlock)
-    print("\nperforming decryption:")
-    decryptedBlock = simpleCipher.decrypt(encryptedBlock)
-    print(decryptedBlock)
     return(encryptedBlock)
 
 
