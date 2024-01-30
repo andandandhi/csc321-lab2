@@ -6,7 +6,7 @@ KEY_SIZE = 16
 
 def file_reader() -> None:
     aes_key = get_random_bytes(KEY_SIZE)
-    #iv = get_random_bytes(KEY_SIZE)
+    iv = get_random_bytes(KEY_SIZE)
 
     n = len(sys.argv)
     if(n < 1):
@@ -14,7 +14,7 @@ def file_reader() -> None:
     
     filename = sys.argv[1]
     with open(filename, "rb") as in_file, \
-         open("ecb_ciphertext.bmp", "wb") as ecb_file:
+        open("ecb_ciphertext.bmp", "wb") as ecb_file:
         
         ecb_file.write(in_file.read(54)) #i dont know how big bmp header is; this is guess
 
@@ -24,16 +24,19 @@ def file_reader() -> None:
             buf = in_file.read(KEY_SIZE)
         ecb_file.write(ecb_encrypt(pkcs7(buf), aes_key))
 
-        # open("cbc_ciphertext.bmp", "wb") as cbc_file:
+#changes start here for CBC
+    with open(filename, "rb") as in_file, \
+        open("cbc_ciphertext.bmp", "wb") as cbc_file:
         
-        #cbc_file.write(in_file.read(54)) #i dont know how big bmp header is; this is guess
+        cbc_file.write(in_file.read(54)) #i dont know how big bmp header is; this is guess
 
-        #buf = in_file.read(KEY_SIZE)
-        #while len(buf) == KEY_SIZE:
-            #cbc_file.write(cbc_encrypt(buf, aes_key, iv))
-            #buf = in_file.read(KEY_SIZE)
-            #iv = cbc_encrypt(buf, aes_key, iv) - get the chaining
-        #cbc_file.write(cbc_encrypt(pkcs7(buf), aes_key))
+        buf = in_file.read(KEY_SIZE)
+        while len(buf) == KEY_SIZE:
+            encrypted_buf = cbc_encrypt(buf, aes_key, iv)
+            cbc_file.write(encrypted_buf)
+            buf = in_file.read(KEY_SIZE)
+            iv = encrypted_buf
+        cbc_file.write(cbc_encrypt(pkcs7(buf), aes_key, iv))
 
 def pkcs7(buf: bytes) -> bytes:
     pad_len =  KEY_SIZE - len(buf)
@@ -69,7 +72,7 @@ def xor(words, iv):
     return code
 
 
-def cbc(plaintextBlock: bytes, key: bytes, init_v: bytes) -> bytes:
+def cbc_encrypt(plaintextBlock: bytes, key: bytes, init_v: bytes) -> bytes:
     
     #plaintextBlock = get_random_bytes(16) #in bytes
     #init_v = get_random_bytes(16) #in bytes
@@ -96,5 +99,5 @@ def cbc(plaintextBlock: bytes, key: bytes, init_v: bytes) -> bytes:
 
 if __name__ == '__main__':
     file_reader()
-    cbc()
+    
 
