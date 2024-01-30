@@ -6,7 +6,8 @@ KEY_SIZE = 16
 
 def file_reader() -> None:
     aes_key = get_random_bytes(KEY_SIZE)
-    
+    #iv = get_random_bytes(KEY_SIZE)
+
     n = len(sys.argv)
     if(n < 1):
         print("Missing file name")
@@ -22,6 +23,17 @@ def file_reader() -> None:
             ecb_file.write(ecb_encrypt(buf, aes_key))
             buf = in_file.read(KEY_SIZE)
         ecb_file.write(ecb_encrypt(pkcs7(buf), aes_key))
+
+        # open("cbc_ciphertext.bmp", "wb") as cbc_file:
+        
+        #cbc_file.write(in_file.read(54)) #i dont know how big bmp header is; this is guess
+
+        #buf = in_file.read(KEY_SIZE)
+        #while len(buf) == KEY_SIZE:
+            #cbc_file.write(cbc_encrypt(buf, aes_key, iv))
+            #buf = in_file.read(KEY_SIZE)
+            #iv = cbc_encrypt(buf, aes_key, iv) - get the chaining
+        #cbc_file.write(cbc_encrypt(pkcs7(buf), aes_key))
 
 def pkcs7(buf: bytes) -> bytes:
     pad_len =  KEY_SIZE - len(buf)
@@ -57,25 +69,25 @@ def xor(words, iv):
     return code
 
 
-def cbc():
-    KEY_SIZE = 16 
+def cbc(plaintextBlock: bytes, key: bytes, init_v: bytes) -> bytes:
     
-    plaintextBlock = get_random_bytes(16) #in bytes
-    init_v = get_random_bytes(16) #in bytes
-    key = get_random_bytes(KEY_SIZE) #generating new key as per diagram in bytes
+    #plaintextBlock = get_random_bytes(16) #in bytes
+    #init_v = get_random_bytes(16) #in bytes
+    #key = get_random_bytes(KEY_SIZE) #generating new key as per diagram in bytes
     xor_val = xor(plaintextBlock, init_v) #xoring plaintext and init vector
-    print("xor val:") #checking xor, you can remove thes two lines
-    print(xor_val)
+    #print("xor val:") #checking xor, you can remove thes two lines
+    #print(xor_val)
     
     simpleCipher = AES.new(key, AES.MODE_ECB) #creating encrytpion alg
    
     
     encryptedBlock = simpleCipher.encrypt(xor_val)#encrypting the xored value with ECB (so this is CBC)
-    print("encrypted block:", encryptedBlock) #checking encryption
+    #print("encrypted block:", encryptedBlock) #checking encryption
+    return encryptedBlock
     
 
-    decryptedBlock = simpleCipher.decrypt(encryptedBlock) #checking decryption
-    print(decryptedBlock)
+   #decryptedBlock = simpleCipher.decrypt(encryptedBlock) #checking decryption
+    #print(decryptedBlock)
 
    
  
