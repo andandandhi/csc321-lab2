@@ -13,7 +13,7 @@ def file_reader() -> None:
     
     filename = sys.argv[1]
     with open(filename, "rb") as in_file, \
-         open("ecb_ciphertext", "wb") as ecb_file:
+         open("ecb_ciphertext.bmp", "wb") as ecb_file:
         
         ecb_file.write(in_file.read(54)) #i dont know how big bmp header is; this is guess
 
