@@ -3,6 +3,9 @@ from Crypto.Random import get_random_bytes
 import sys
 
 KEY_SIZE = 16
+#below is for task 2
+#aes_key = get_random_bytes(KEY_SIZE)
+#iv = get_random_bytes(KEY_SIZE)
 
 def file_reader() -> None:
     aes_key = get_random_bytes(KEY_SIZE)
@@ -50,7 +53,7 @@ def ecb_encrypt(plaintextBlock: bytes, aes_key: bytes) -> bytes:
     encryptedBlock = simpleCipher.encrypt(plaintextBlock)
     return(encryptedBlock)
 
-def conversion(word):
+def conversion(word): #maybe change for just : and =
     conversion = ""
     for i in word:
         con = ord(i)
@@ -93,6 +96,7 @@ def cbc_encrypt(plaintextBlock: bytes, key: bytes, init_v: bytes) -> bytes:
     #print(decryptedBlock)
 
    
+
  
 
     
