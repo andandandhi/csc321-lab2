@@ -8,7 +8,7 @@ KEY_SIZE = 16
 AES_KEY = get_random_bytes(KEY_SIZE)
 IV = get_random_bytes(KEY_SIZE)
 
-def debug_print(message, opt=False):
+def debug_print(message, opt=False) -> None:
     """Optional print for debugging purposes, default is false.
     Change default opt=True to print everything.
     """
