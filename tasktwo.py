@@ -9,15 +9,23 @@ KEY_SIZE = 16
 AES_KEY = get_random_bytes(KEY_SIZE)
 IV = get_random_bytes(KEY_SIZE)
 
+def opt_print(message, opt=False):
+    if opt:
+        print(message)
+        
 def get_buf(message: bytes) -> Generator[bytes, None, None]:
+    """Splits the message into 16 byte blocks, adding end padding.
+    """
     buf = bytearray()
     for b in message:
         buf.append(b)
         if len(buf) == 16:
             encoding = bytes(buf)
+            opt_print("Block: " + str(encoding), False)
             yield encoding
             buf = bytearray()
     padding = pkcs7(bytes(buf))
+    opt_print("Block: " + str(padding), False)
     yield padding
 
 def submit() -> bytes():
@@ -45,4 +53,4 @@ def submit() -> bytes():
     return(bytes(ciphertext))
 
 if __name__ == '__main__':
-    print(submit())
+    opt_print(submit(), True)
