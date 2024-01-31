@@ -1,5 +1,5 @@
 import unittest
-from tasktwo import get_buf
+from tasktwo import get_buf_pad
 
 class TestTaskTwo(unittest.TestCase):
     def test_16pad_submit(self):
@@ -10,7 +10,7 @@ class TestTaskTwo(unittest.TestCase):
                     bytes("ata=12345678901;", 'utf-8'),
                     bytes("session-id=31337", 'utf-8'),
                     bytes([16] * 16)]
-        result = list(get_buf(bytes_in))
+        result = list(get_buf_pad(bytes_in))
         assert(expected == result)
             
     def test_15pad_submit(self):
@@ -21,7 +21,7 @@ class TestTaskTwo(unittest.TestCase):
                     bytes("ata=123456789012", 'utf-8'),
                     bytes(";session-id=3133", 'utf-8'),
                     bytes([ord('7')] + ([15] * 15))]
-        result = list(get_buf(bytes_in))
+        result = list(get_buf_pad(bytes_in))
         assert(expected == result)
 
     
