@@ -12,12 +12,13 @@ IV = get_random_bytes(KEY_SIZE)
 def get_buf(message: bytes) -> Generator[bytes, None, None]:
     buf = bytearray()
     for b in message:
-        if len(buf) >= 16:
-            yield bytes(buf)
+        buf.append(b)
+        if len(buf) == 16:
+            encoding = bytes(buf)
+            yield encoding
             buf = bytearray()
-        else:
-            buf.append(b)
-    yield pkcs7(bytes(buf))
+    padding = pkcs7(bytes(buf))
+    yield padding
 
 def submit() -> bytes():
     words = input("Type words here: ")
@@ -43,5 +44,5 @@ def submit() -> bytes():
         prev_cipherblock = cipherblock
     return(bytes(ciphertext))
 
-
-print(submit())
+if __name__ == '__main__':
+    print(submit())
