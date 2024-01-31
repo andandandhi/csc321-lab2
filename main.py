@@ -62,16 +62,12 @@ def conversion(word): #maybe change for just : and =
     return conversion
 
 def xor(words, iv):
-    print(iv)
     code = b""
     for i in range(0,len(words)):
         byte_1 = words[i]
         byte_2 = iv[i]
         xor_val = bytes([byte_1 ^ byte_2])
         code = code + xor_val
-    print(code)
-    print(len(iv))
-    print(len(code))
     return code
 
 
