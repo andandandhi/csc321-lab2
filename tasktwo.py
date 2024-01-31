@@ -106,27 +106,27 @@ def cbc_decrypt(ciphertext: bytes) -> str:
         plainblock = xor(aes_out, prev_cipherblock)
         decrypted_bytearray.extend(plainblock)
         prev_cipherblock = cipherblock
-    return decrypted_bytearray.decode('utf-8', errors='ignore')
+    return decrypted_bytearray.decode('utf-8', errors='replace')
 
 def verify(ciphertext: bytes) -> bool:
     plaintext = cbc_decrypt(ciphertext)
     return plaintext.find(';admin=true') != -1
 
 def hack():
+    """Call the hack in tests.py"""
     encrypted_message=submit_manual_input('9admin9true')
     em_ba = bytearray(encrypted_message)
     em_ba[4] = em_ba[4] ^ (1 << 1) #index on bytearray returns int
-    em_ba[10] = em_ba[10] ^ (1 << 2)
+    em_ba[10] = em_ba[10] ^ (1 << 2) #0b00000100
     # userid=456;userd
     # ata=9admin9true5
     # '9' + 0x02 = ';'   '9' + 0x04 = '='
-    # add 2 to 5th byte, add 4 to 11th byte
-    malcious_msg = em_ba
+    # flip 0b00000010 on 5th byte, flip 0b00000100 11th byte
+    malcious_msg = bytes(em_ba)
     debug_print(cbc_decrypt(malcious_msg), True)
     print(verify(malcious_msg))
 
 if __name__ == '__main__':
-    #encrypted_message = submit()
-    #debug_print(encrypted_message)
-    #debug_print("\n"+cbc_decrypt(encrypted_message), True)
-    hack()
+    encrypted_message = submit()
+    debug_print(encrypted_message)
+    debug_print("\n"+cbc_decrypt(encrypted_message), True)
