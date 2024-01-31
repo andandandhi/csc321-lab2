@@ -113,7 +113,7 @@ def verify(ciphertext: bytes) -> bool:
     return plaintext.find(';admin=true') != -1
 
 def hack() -> None:
-    """Call the hack in tests.py"""
+    """TODO: Call the hack in tests.py"""
     encrypted_message=submit_manual_input('9admin9true')
     em_ba = bytearray(encrypted_message)
     em_ba[4] = em_ba[4] ^ (1 << 1) #index on bytearray returns int
