@@ -23,7 +23,6 @@ class TestTaskTwo(unittest.TestCase):
                     bytes([ord('7')] + ([15] * 15))]
         result = list(get_buf_pad(bytes_in))
         assert(expected == result)
-
     
 if __name__ == '__main__':
     unittest.main()
