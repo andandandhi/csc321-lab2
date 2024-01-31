@@ -106,11 +106,11 @@ def cbc_decrypt(ciphertext: bytes) -> str:
         plainblock = xor(aes_out, prev_cipherblock)
         decrypted_bytearray.extend(plainblock)
         prev_cipherblock = cipherblock
-    return decrypted_bytearray.decode('utf-8')
+    return decrypted_bytearray.decode('utf-8', errors='ignore')
 
 def verify(ciphertext: bytes) -> bool:
     plaintext = cbc_decrypt(ciphertext)
-    return bool(plaintext.find(';admin=true'))
+    return plaintext.find(';admin=true') != -1
 
 def hack():
     encrypted_message=submit_manual_input('9admin9true')
@@ -121,8 +121,8 @@ def hack():
     # ata=9admin9true5
     # '9' + 0x02 = ';'   '9' + 0x04 = '='
     # add 2 to 5th byte, add 4 to 11th byte
-    malcious_msg = encrypted_message
-    debug_print(malcious_msg, True)
+    malcious_msg = em_ba
+    debug_print(cbc_decrypt(malcious_msg), True)
     print(verify(malcious_msg))
 
 if __name__ == '__main__':
