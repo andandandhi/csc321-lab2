@@ -112,7 +112,7 @@ def verify(ciphertext: bytes) -> bool:
     plaintext = cbc_decrypt(ciphertext)
     return plaintext.find(';admin=true') != -1
 
-def hack():
+def hack() -> None:
     """Call the hack in tests.py"""
     encrypted_message=submit_manual_input('9admin9true')
     em_ba = bytearray(encrypted_message)
