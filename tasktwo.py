@@ -9,10 +9,13 @@ KEY_SIZE = 16
 AES_KEY = get_random_bytes(KEY_SIZE)
 IV = get_random_bytes(KEY_SIZE)
 
-def opt_print(message, opt=False):
+def debug_print(message, opt=False):
+    """Optional print for debugging purposes, default is false.
+    Change default opt=True to print everything.
+    """
     if opt:
         print(message)
-        
+
 def get_buf(message: bytes) -> Generator[bytes, None, None]:
     """Splits the message into 16 byte blocks, adding end padding.
     """
@@ -21,11 +24,11 @@ def get_buf(message: bytes) -> Generator[bytes, None, None]:
         buf.append(b)
         if len(buf) == 16:
             encoding = bytes(buf)
-            opt_print("Block: " + str(encoding), False)
+            debug_print("Block: " + str(encoding))
             yield encoding
             buf = bytearray()
     padding = pkcs7(bytes(buf))
-    opt_print("Block: " + str(padding), False)
+    debug_print("Block: " + str(padding))
     yield padding
 
 def submit() -> bytes():
@@ -52,5 +55,6 @@ def submit() -> bytes():
         prev_cipherblock = cipherblock
     return(bytes(ciphertext))
 
+
 if __name__ == '__main__':
-    opt_print(submit(), True)
+    debug_print(submit(), True)
