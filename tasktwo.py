@@ -115,9 +115,8 @@ def verify(ciphertext: bytes) -> bool:
     plaintext = cbc_decrypt(ciphertext)
     return plaintext.find(';admin=true') != -1
 
-def hack() -> None:
-    """TODO: Call the hack in tests.py"""
-    encrypted_message=submit_manual_input('9admin9true')
+def hack(in_msg: str = '9admin9true') -> None: 
+    encrypted_message=submit_manual_input(in_msg)
     em_ba = bytearray(encrypted_message)
     em_ba[4] = em_ba[4] ^ (1 << 1) #index on bytearray returns int
     em_ba[10] = em_ba[10] ^ (1 << 2) #0b00000100
@@ -127,7 +126,7 @@ def hack() -> None:
     # flip 0b00000010 on 5th byte, flip 0b00000100 11th byte
     malcious_msg = bytes(em_ba)
     debug_print(cbc_decrypt(malcious_msg), True)
-    print(verify(malcious_msg))
+    return verify(malcious_msg)
 
 if __name__ == '__main__':
     encrypted_message = submit()
