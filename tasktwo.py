@@ -106,6 +106,9 @@ def cbc_decrypt(ciphertext: bytes) -> str:
         plainblock = xor(aes_out, prev_cipherblock)
         decrypted_bytearray.extend(plainblock)
         prev_cipherblock = cipherblock
+    pad_remove = decrypted_bytearray[-1]
+    int(pad_remove)
+    decrypted_bytearray = decrypted_bytearray[:-pad_remove]
     return decrypted_bytearray.decode('utf-8', errors='replace')
 
 def verify(ciphertext: bytes) -> bool:
@@ -129,4 +132,5 @@ def hack() -> None:
 if __name__ == '__main__':
     encrypted_message = submit()
     debug_print(encrypted_message)
+    #debug_print("\n"+cbc_decrypt(encrypted_message))
     debug_print("\n"+cbc_decrypt(encrypted_message), True)
