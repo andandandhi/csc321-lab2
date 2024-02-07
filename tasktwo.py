@@ -96,7 +96,6 @@ def submit_manual_input(words: str) -> bytes:
 
 def cbc_decrypt(ciphertext: bytes) -> str:
     """Decrypts CBC ciphertext.
-    Does NOT remove padding. 
     """
     algorithm = AES.new(AES_KEY, AES.MODE_ECB)    
     decrypted_bytearray = bytearray()
