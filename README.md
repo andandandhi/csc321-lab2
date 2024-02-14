@@ -1,6 +1,9 @@
 # csc321-lab2
 Symmetric Key Cryptography
 
+## Author
+SHARON PAGIDIPATI & ANDREW DANG
+
 ## Write up
 ### Task One
 
